@@ -1,0 +1,18 @@
+{
+  "name": "irma-backend",
+  "version": "0.1.0",
+  "description": "Backend library to use API endpoints of the IRMA server",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/privacybydesign/irma-backend-packages",
+    "directory": "js/irma-backend"
+  },
+  "license": "MIT",
+  "author": "Ivar Derksen (Privacy by Design Foundation)",
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.1",
+    "eventsource": "^1.0.7",
+    "deepmerge": "^4.2.2"
+  }
+}

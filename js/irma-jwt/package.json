@@ -1,0 +1,16 @@
+{
+  "name": "irma-jwt",
+  "version": "0.1.0",
+  "description": "Backend library to make and verify IRMA JWTs",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/privacybydesign/irma-backend-packages",
+    "directory": "js/irma-jwt"
+  },
+  "author": "Ivar Derksen (Privacy by Design Foundation)",
+  "license": "MIT",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1"
+  }
+}
