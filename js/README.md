@@ -90,8 +90,10 @@ const irma = new IrmaJwt(method, options);
 This method signs the request being passed and returns the JWT.
 
 ##### `verify(jwt)`
-This method verifies whether the JWT is valid according to the specified key material and
-returns the [JWT body](https://irma.app/docs/session-requests/#jwts-signed-session-requests).
+This method verifies whether the JWT is valid according to the specified key material.
+It returns the JWT body of the supplied [session request JWT](https://irma.app/docs/session-requests/#jwts-signed-session-requests)
+or [session result JWT](https://irma.app/docs/api-irma-server/#get-session-token-result-jwt),
+depending on the JWT type.
 
 ## Examples
 In the examples directory a small example can be found that shows some of the methods of `irma-backend`
