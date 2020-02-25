@@ -46,7 +46,7 @@ module.exports = class IrmaJwt {
     return JWT.sign({[ fields[jwtOptions.subject] ] : rrequest}, this._keys.sk, jwtOptions);
   }
 
-  verifyJwt(jwt) {
+  verify(jwt) {
     switch (this._algorithm) {
       case "HS256":
         if (!this._keys.sk)

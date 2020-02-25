@@ -19,7 +19,7 @@ const irmaJwt = new IrmaJwt('hmac', {sk: 'test-key'}, 'localhost');
 console.log('JWT example:');
 const jwt = irmaJwt.signSessionRequest(request);
 console.log('JWT:', jwt);
-console.log('Verified JWT:', irmaJwt.verifyJwt(jwt));
+console.log('Verified JWT:', irmaJwt.verify(jwt));
 
 // Start a session, show initial status and immediately cancel again
 console.log('\nStarting IRMA session example:');
