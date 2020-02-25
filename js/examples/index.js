@@ -12,8 +12,8 @@ const request = {
   ]
 };
 
-const irmaBackend = new IrmaBackend(serverUrl);
-const irmaJwt = new IrmaJwt('hmac', {sk: 'test-key'}, 'localhost');
+const irmaBackend = new IrmaBackend(serverUrl, {debugging: true});
+const irmaJwt = new IrmaJwt('hmac', {secretKey: 'test-key', iss: 'localhost'});
 
 // Show how to sign and verify JWTs
 console.log('JWT example:');

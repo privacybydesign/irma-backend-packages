@@ -131,7 +131,7 @@ module.exports = class SessionState {
 
   _sanitizeOptions(options) {
     const defaults = {
-      debugging:  false,
+      debugging:  options.debugging,
 
       serverSentEvents: {
         url:        o => `${o.url}/statusevents`,
@@ -141,7 +141,7 @@ module.exports = class SessionState {
       polling: {
         url:        o => `${o.url}/status`,
         interval:   500,
-        startState: ''
+        startState: false
       }
     };
 

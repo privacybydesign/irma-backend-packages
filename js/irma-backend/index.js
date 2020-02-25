@@ -1,5 +1,6 @@
 const SessionState  = require('./session-state');
 const SessionStatus = require('./session-status');
+const merge         = require('deepmerge');
 
 if ( typeof fetch === 'undefined' )
   require('isomorphic-fetch');
@@ -10,15 +11,20 @@ module.exports = class IrmaBackend {
     return SessionStatus;
   }
 
-  constructor(serverUrl, serverToken) {
+  constructor(serverUrl, options) {
     this._sessionStates = {};
     this._serverUrl = serverUrl;
-    this._serverToken = serverToken;
+    this._options = this._sanitizeOptions(options);
   }
 
   _serverFetch(endpoint, requestOptions) {
-    if (this._serverToken)
-      requestOptions.headers['Authorization'] = this._serverToken;
+    if (this._options.serverToken)
+      requestOptions.headers['Authorization'] = this._options.serverToken;
+
+    const url = `${this._serverUrl}/${endpoint}`;
+
+    if (this._options.debugging)
+      console.log(`🌎 Fetching ${url}`);
 
     return fetch(`${this._serverUrl}/${endpoint}`, requestOptions)
     .then(r => {
@@ -71,10 +77,21 @@ module.exports = class IrmaBackend {
   subscribeStatusEvents(sessionToken, eventCallback) {
     let sessionState = this._sessionStates[sessionToken];
     if (!sessionState) {
-      sessionState = new SessionState(`${this._serverUrl}/session/${sessionToken}`);
+      sessionState = new SessionState(`${this._serverUrl}/session/${sessionToken}`, this._options);
       this._sessionStates[sessionToken] = sessionState;
     }
     sessionState.observe(eventCallback);
+  }
+
+  _sanitizeOptions(options) {
+    const defaults = {
+      debugging: false,
+
+      // Token to authenticate at the irma server
+      serverToken: false,
+    };
+
+    return merge(defaults, options || {});
   }
 
 }

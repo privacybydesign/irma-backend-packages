@@ -7,16 +7,20 @@ for generating and verifying IRMA JWTs.
 This module can be used in the following way:
 ```javascript
 const IrmaBackend = require('irma-backend');
-const irma = new IrmaBackend(serverUrl, serverToken);
+const irma = new IrmaBackend(serverUrl, options);
 ```
 #### Constructor parameters
 
  - `serverUrl` should the be URL where your [IRMA server](https://irma.app/docs/irma-server/)
    is running
- - `serverToken` (optional) specifies the server API token used for
-   [requestor authentication](https://irma.app/docs/irma-server/#requestor-authentication).
-   When the option is not being specified, no authorization headers will be sent. This can
-   only be used if the IRMA server is configured to accept unauthenticated requests.
+ - `options` (optional) specifies a struct where additional options can be specified.
+   We currently support the following options:
+    - `serverToken` field to enable
+      [requestor authentication](https://irma.app/docs/irma-server/#requestor-authentication).
+      By default this field is set to `false`, meaning that no authorization headers will be sent. 
+      This can only be used if the IRMA server is configured to accept unauthenticated requests.
+    - `debugging` field to enable printing helpful output to the console for debugging.
+      By default this field is set to `false`.
 
 #### Available methods
 ##### `startSession(request)`
@@ -65,16 +69,20 @@ status can be retrieved using `IrmaBackend.SessionStatus()`.
 This module can be used in the following way:
 ```javascript
 const IrmaJwt = require('irma-jwt');
-const irma = new IrmaJwt(method, keys, iss);
+const irma = new IrmaJwt(method, options);
 ```
 
 #### Constructor parameters
  - `method` concerns the algorithm that is used to sign the JWT. Currently IRMA supports the methods
    `hmac` for a HS256 signed JWT and `publickey` for a RS256 signed JWT.
- - `keys` have to contain the keys that are needed for the particular signing method. For `hmac` this is
-   `{sk: '...'}` and for `publickey` this is `{sk: '...', pk: '...'}'`. You are not required to give all
-   keys. For the method `publickey` this can be relevant if you only want to sign or only want to verify.
- - `iss` concerns the name being recorded in the 'issuer' field (iss) of the JWT. This parameter is only
+ - `options` is a struct that defines the specific options related to the chosen `method`:
+    - `secretKey` field indicates the secret key that is going to be used. For the method `hmac` this
+    field is required, since the secret key there is both used for signing and verification. 
+    For the method `publickey` the secretKey is only used for signing. In that case the `publicKey`
+    is used for verification. Therefore, if you only need verification, you can omit this field.
+    - `publicKey` field indicates the public key that is going to be used. This field is only relevant
+    when using JWT verification using the method `publickey`. Otherwise you can omit this field. 
+    - `iss` field concerns the name being recorded in the 'issuer' field (iss) of the JWT. This parameter is only
    required if you want to sign JWTs.
 
 #### Available methods
