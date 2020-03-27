@@ -24,6 +24,8 @@ const irmaBackend = new IrmaBackend(irmaServerUrl, {debugging: true});
 // Create HTTP endpoint to serve session
 const requestHandler = async (request, response) => {
   const session = await irmaBackend.startSession(irmaRequest);
+
+  // Subscribe for backend status events
   irmaBackend.subscribeStatusEvents(session.token, (error, status) => {
     if (error)
       return console.log('Error occured in session:', error);
@@ -32,26 +34,31 @@ const requestHandler = async (request, response) => {
         .then(result => console.log('Session successfully received by backend:\n', result));
     }
   });
-  response.end(JSON.stringify(session));
+
+  // Strip off backend token such that frontend does not see it
+  response.end(JSON.stringify(session.sessionPtr));
 };
 
+// Run server
 const server = http.createServer(requestHandler);
 server.listen(port, err => {
   if (err)
     return console.log('Error while running server', err);
 });
 
+// Start a session at the newly created endpoint
 const irmaFrontend = new IrmaCore({
   debugging: true,
   session: {
-    // Point this to your IRMA server:
     url: 'http://localhost:8080',
 
-    // Define your disclosure request:
     start: {
       url: o => o.url,
       method: 'GET',
       headers: {}
+    },
+    mapping: {
+      sessionPtr: r => r,
     },
     result: false
   }
