@@ -96,9 +96,14 @@ or [session result JWT](https://irma.app/docs/api-irma-server/#get-session-token
 depending on the JWT type.
 
 ## Examples
-In the examples directory a small example can be found that shows some of the methods of `irma-backend`
-and `irma-jwt`. The example requires a running IRMA server. The example can be started in the following way:
+In the examples directory small examples can be found that show some of the methods of `irma-backend`
+and `irma-jwt`. The examples require a running IRMA server at port 8088. The examples can be started
+in the following way:
 ```
 npm install
-npm start
+
+# For irma-backend example
+npm run start-backend
+# For irma-jwt example
+npm run start-jwt
 ```

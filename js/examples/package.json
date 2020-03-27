@@ -4,7 +4,9 @@
   "description": "Examples on how to use irma-backend and irma-jwt in Javascript",
   "main": "index.js",
   "scripts": {
-    "start": "node ./index.js"
+    "start": "node index.js",
+    "start-backend": "node index.js backend",
+    "start-jwt": "node index.js jwt"
   },
   "repository": {
     "type": "git",
@@ -15,6 +17,9 @@
   "license": "MIT",
   "dependencies": {
     "irma-backend": "../irma-backend",
-    "irma-jwt": "../irma-jwt"
+    "irma-jwt": "../irma-jwt",
+    "@privacybydesign/irma-client": "^0.1.1-rc.0",
+    "@privacybydesign/irma-console": "^0.1.1-rc.0",
+    "@privacybydesign/irma-core": "^0.1.1-rc.1"
   }
 }
