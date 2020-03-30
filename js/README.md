@@ -45,7 +45,7 @@ This method behaves the same as `getSessionResult`, but fetches the session resu
 This method fetches the current status of the IRMA session. The parameter `sessionToken` concerns
 the token as being returned by `startSession`. The function returns a promise which on resolve
 gives the current session status. A struct with the possible values for the session status
-can be retrieved using the static call `IrmaBackend.SessionStatus()`.
+can be retrieved using the static call `IrmaBackend.SessionStatus`.
 
 ##### `getServerPublicKey()`
 This method fetches the JWT public key of the IRMA server. It returns a promise which on resolve
@@ -63,7 +63,7 @@ The parameter `eventCallback` concerns a 'error-first' callback function to rec
 
 The callback function signature is `(error, status) => {}`. When error is being `null`, the status
 parameter will contain the new session status. A struct with the possible values for the session
-status can be retrieved using the static call `IrmaBackend.SessionStatus()`.
+status can be retrieved using the static call `IrmaBackend.SessionStatus`.
 
 ## IRMA JWT
 This module can be used in the following way:
