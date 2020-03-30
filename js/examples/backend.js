@@ -29,7 +29,7 @@ const requestHandler = async (request, response) => {
   irmaBackend.subscribeStatusEvents(session.token, (error, status) => {
     if (error)
       return console.log('Error occured in session:', error);
-    if (status === 'DONE') {
+    if (status === IrmaBackend.SessionStatus.Done) {
       irmaBackend.getSessionResult(session.token)
         .then(result => console.log('Session successfully received by backend:\n', result));
     }

@@ -1,7 +1,7 @@
 # IRMA backend Javascript (node.js) package
 
-This packages contains a module `irma-backend` for dealing with `irma server` and a module `irma-jwt`
-for generating and verifying IRMA JWTs.
+This packages contains a module `irma-backend`, for handling messages from and to the `irma server`,
+and a module `irma-jwt`, for generating and verifying IRMA JWTs.
 
 ## IRMA backend
 This module can be used in the following way:
@@ -11,8 +11,8 @@ const irma = new IrmaBackend(serverUrl, options);
 ```
 #### Constructor parameters
 
- - `serverUrl` should the be URL where your [IRMA server](https://irma.app/docs/irma-server/)
-   is running
+ - `serverUrl` should be the URL where your [IRMA server](https://irma.app/docs/irma-server/)
+   is running.
  - `options` (optional) specifies a struct where additional options can be specified.
    We currently support the following options:
     - `serverToken` field to enable
@@ -26,7 +26,7 @@ const irma = new IrmaBackend(serverUrl, options);
 ##### `startSession(request)`
 This method starts a session at the IRMA server. The `request` parameter may either
 be a session request object or a signed session request JWT. The function returns
-a promise with on resolve the session identifiers `{sessionPtr: ..., token: ...}`.
+a promise which on resolve gives the session identifiers `{sessionPtr: ..., token: ...}`.
 
 ##### `cancelSession(sessionToken)`
 This method cancels the session with token `sessionToken` at the IRMA server. The parameter
@@ -35,7 +35,7 @@ On resolve the session is cancelled successfully.
 
 ##### `getSessionResult(sessionToken)`
 This method fetches the session result object. The parameter `sessionToken` concerns the token
-as being returned by `startSession`. It returns a promise with on resolve the session
+as being returned by `startSession`. It returns a promise which on resolve gives the session
 result object. When the result is not available yet, the promise is rejected.
 
 ##### `getSessionResultJwt(sessionToken)`
@@ -43,13 +43,13 @@ This method behaves the same as `getSessionResult`, but fetches the session resu
 
 ##### `getSessionStatus(sessionToken)`
 This method fetches the current status of the IRMA session. The parameter `sessionToken` concerns
-the token as being returned by `startSession`. The function returns a promise with on resolve
-the session status. A struct with the possible values for the session status can be retrieved
-using `IrmaBackend.SessionStatus()`.
+the token as being returned by `startSession`. The function returns a promise which on resolve
+gives the current session status. A struct with the possible values for the session status
+can be retrieved using the static call `IrmaBackend.SessionStatus()`.
 
 ##### `getServerPublicKey()`
-This method fetches the JWT public key of the IRMA server. It returns a promise with on resolve
-the public key in a PEM encoded string. When no JWT public key is configured at the IRMA server,
+This method fetches the JWT public key of the IRMA server. It returns a promise which on resolve
+gives the public key in a PEM encoded string. When no JWT public key is configured at the IRMA server,
 the promise will be rejected.
 
 **Important remark:** when using method `hmac` for JWT signing, the same key is used for both
@@ -63,7 +63,7 @@ The parameter `eventCallback` concerns a 'error-first' callback function to rec
 
 The callback function signature is `(error, status) => {}`. When error is being `null`, the status
 parameter will contain the new session status. A struct with the possible values for the session
-status can be retrieved using `IrmaBackend.SessionStatus()`.
+status can be retrieved using the static call `IrmaBackend.SessionStatus()`.
 
 ## IRMA JWT
 This module can be used in the following way:
@@ -77,9 +77,9 @@ const irma = new IrmaJwt(method, options);
    `hmac` for a HS256 signed JWT and `publickey` for a RS256 signed JWT.
  - `options` is a struct that defines the specific options related to the chosen `method`:
     - `secretKey` field indicates the secret key that is going to be used. For the method `hmac` this
-    field is required, since the secret key there is both used for signing and verification. 
+    field is required, since the HS256 secret key is both used for signing and verification. 
     For the method `publickey` the secretKey is only used for signing. In that case the `publicKey`
-    is used for verification. Therefore, if you only need verification, you can omit this field.
+    is used for verification. Therefore, if you only need verification, you can omit the `secretKey` field.
     - `publicKey` field indicates the public key that is going to be used. This field is only relevant
     when using JWT verification using the method `publickey`. Otherwise you can omit this field. 
     - `iss` field concerns the name being recorded in the 'issuer' field (iss) of the JWT. This parameter is only
