@@ -168,6 +168,7 @@ In the examples directory small examples can be found that show some of the meth
 and `irma-jwt`. The examples require a running IRMA server at port 8088. The examples can be started
 in the following way:
 ```
+cd examples
 npm install
 
 # For irma-backend example
