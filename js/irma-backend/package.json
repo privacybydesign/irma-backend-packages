@@ -1,5 +1,5 @@
 {
-  "name": "irma-backend",
+  "name": "@privacybydesign/irma-backend",
   "version": "0.1.0",
   "description": "Backend library to use API endpoints of the IRMA server",
   "main": "index.js",
