@@ -1,32 +1,37 @@
 # IRMA backend Javascript (node.js) package
 
-This packages contains a module `irma-backend`, for handling messages from and to the `irma server`,
-and a module `irma-jwt`, for generating and verifying IRMA JWTs.
+This packages contains a module `irma-backend`, for handling messages from and to the 
+[`irma server`](https://irma.app/docs/irma-server/), and a module `irma-jwt`,
+for generating and verifying IRMA JWTs.
 
 ## IRMA backend
 This module can be used in the following way:
 ```javascript
-const IrmaBackend = require('irma-backend');
-const irma = new IrmaBackend(serverUrl, options);
+const IrmaBackend = require('@privacybydesign/irma-backend');
+const irmaBackend = new IrmaBackend(serverUrl, options);
 ```
 #### Constructor parameters
 
- - `serverUrl` should be the URL where your [IRMA server](https://irma.app/docs/irma-server/)
+ - `serverUrl` should be the URL where your [`irma server`](https://irma.app/docs/irma-server/)
    is running.
  - `options` (optional) specifies a struct where additional options can be specified.
    We currently support the following options:
     - `serverToken` field to enable
       [requestor authentication](https://irma.app/docs/irma-server/#requestor-authentication).
       By default this field is set to `false`, meaning that no authorization headers will be sent. 
-      This can only be used if the IRMA server is configured to accept unauthenticated requests.
+      The default setting can only be used if the IRMA server is configured to
+      accept unauthenticated requests. When request authentication is enabled at your `irma server`,
+      a `serverToken` must be specified.
     - `debugging` field to enable printing helpful output to the console for debugging.
       By default this field is set to `false`.
 
 #### Available methods
 ##### `startSession(request)`
 This method starts a session at the IRMA server. The `request` parameter may either
-be a session request object or a signed session request JWT. The function returns
-a promise which on resolve gives the session identifiers `{sessionPtr: ..., token: ...}`.
+be a [session request object](https://irma.app/docs/session-requests/)
+or a [signed session request JWT](https://irma.app/docs/session-requests/#jwts-signed-session-requests).
+The function returns a promise which on resolve gives the session identifiers
+`{sessionPtr: ..., token: ...}`.
 
 ##### `cancelSession(sessionToken)`
 This method cancels the session with token `sessionToken` at the IRMA server. The parameter
@@ -35,17 +40,20 @@ On resolve the session is cancelled successfully.
 
 ##### `getSessionResult(sessionToken)`
 This method fetches the session result object. The parameter `sessionToken` concerns the token
-as being returned by `startSession`. It returns a promise which on resolve gives the session
-result object. When the result is not available yet, the promise is rejected.
+as being returned by `startSession`. It returns a promise which on resolve gives the [session
+result object](https://irma.app/docs/api-irma-server/#get-session-token-result).
+When the result is not available yet, the promise is rejected.
 
 ##### `getSessionResultJwt(sessionToken)`
-This method behaves the same as `getSessionResult`, but fetches the session result JWT instead.
+This method behaves the same as `getSessionResult`, but fetches the
+[session result JWT](https://irma.app/docs/api-irma-server/#get-session-token-result-jwt) instead.
 
 ##### `getSessionStatus(sessionToken)`
-This method fetches the current status of the IRMA session. The parameter `sessionToken` concerns
-the token as being returned by `startSession`. The function returns a promise which on resolve
-gives the current session status. A struct with the possible values for the session status
-can be retrieved using the static call `IrmaBackend.SessionStatus`.
+This method fetches the current [status](https://irma.app/docs/api-irma-server/#get-session-token-status)
+of the IRMA session. The parameter `sessionToken` concerns the token as being returned by
+`startSession`. The function returns a promise which on resolve gives the current session status.
+A struct with the possible values for the session status can be retrieved using the static call
+`IrmaBackend.SessionStatus`.
 
 ##### `getServerPublicKey()`
 This method fetches the JWT public key of the IRMA server. It returns a promise which on resolve
@@ -62,14 +70,50 @@ session. The parameter `sessionToken` concerns the token as being returned by `s
 The parameter `eventCallback` concerns a 'error-first' callback function to receive the events.
 
 The callback function signature is `(error, status) => {}`. When error is being `null`, the status
-parameter will contain the new session status. A struct with the possible values for the session
-status can be retrieved using the static call `IrmaBackend.SessionStatus`.
+parameter will contain the new [session status](https://irma.app/docs/api-irma-server/#get-session-token-status). 
+A struct with the possible values for the session status can be retrieved using the static call
+`IrmaBackend.SessionStatus`.
+
+#### Code example
+Below a small example of how `irma-backend` can be used:
+```javascript
+const IrmaBackend = require('@privacybydesign/irma-backend');
+const irmaBackend = new IrmaBackend(serverUrl, options);
+
+const irmaRequest = {
+  '@context': 'https://irma.app/ld/request/disclosure/v2',
+  'disclose': [
+    [
+      [ 'irma-demo.MijnOverheid.ageLower.over18' ]
+    ]
+  ]
+};
+
+irmaBackend.startSession(irmaRequest)
+.then(({sessionPtr, token}) => {
+
+  // Send sessionPtr to the frontend
+
+  // Fetch the result if present
+  irmaBackend.subscribeStatusEvents(token, (error, status) => {
+    if (error != null) {
+      throw error;
+    }
+    if (status === IrmaBackend.SessionStatus.Done) {
+      irmaBackend.getSessionResult(token)
+      .then( result => { 
+        // Do something with result
+      });
+    }
+  });
+});
+```
 
 ## IRMA JWT
 This module can be used in the following way:
 ```javascript
-const IrmaJwt = require('irma-jwt');
-const irma = new IrmaJwt(method, options);
+const IrmaJwt = require('@privacybydesign/irma-jwt');
+const irmaJwt = new IrmaJwt(method, options);
 ```
 
 #### Constructor parameters
@@ -87,7 +131,8 @@ const irma = new IrmaJwt(method, options);
 
 #### Available methods
 ##### `signSessionRequest(request)`
-This method signs the request being passed and returns the JWT.
+This method signs the [session request object](https://irma.app/docs/session-requests/)
+being passed and returns the JWT.
 
 ##### `verify(jwt)`
 This method verifies whether the JWT is valid according to the specified key material.
@@ -95,7 +140,30 @@ It returns the JWT body of the supplied [session request JWT](https://irma.app/d
 or [session result JWT](https://irma.app/docs/api-irma-server/#get-session-token-result-jwt),
 depending on the JWT type.
 
-## Examples
+#### Code example
+Below a small example of how `irma-backend` can be used:
+```javascript
+const IrmaJwt = require('@privacybydesign/irma-jwt');
+const irmaJwt = new IrmaJwt('hmac', {secretKey: 'test-key', iss: 'localhost'});
+
+const irmaRequest = {
+  '@context': 'https://irma.app/ld/request/disclosure/v2',
+  'disclose': [
+    [
+      [ 'irma-demo.MijnOverheid.ageLower.over18' ]
+    ]
+  ]
+};
+
+
+// Sign a session request
+const jwt = irmaJwt.signSessionRequest(irmaRequest);
+
+// Verify the JWT
+const verifiedJwt = irmaJwt.verify(jwt);
+```
+
+## Run examples
 In the examples directory small examples can be found that show some of the methods of `irma-backend`
 and `irma-jwt`. The examples require a running IRMA server at port 8088. The examples can be started
 in the following way:
