@@ -20,8 +20,7 @@ const irmaBackend = new IrmaBackend(serverUrl, options);
       [requestor authentication](https://irma.app/docs/irma-server/#requestor-authentication).
       By default this field is set to `false`, meaning that no authorization headers will be sent. 
       The default setting can only be used if the IRMA server is configured to
-      accept unauthenticated requests. When request authentication is enabled at your `irma server`,
-      a `serverToken` must be specified.
+      accept unauthenticated requests or when only sending [signed JWT session requests](https://irma.app/docs/session-requests/#jwts-signed-session-requests).
     - `debugging` field to enable printing helpful output to the console for debugging.
       By default this field is set to `false`.
 
@@ -29,7 +28,7 @@ const irmaBackend = new IrmaBackend(serverUrl, options);
 ##### `startSession(request)`
 This method starts a session at the IRMA server. The `request` parameter may either
 be a [session request object](https://irma.app/docs/session-requests/)
-or a [signed session request JWT](https://irma.app/docs/session-requests/#jwts-signed-session-requests).
+or a [signed JWT session request](https://irma.app/docs/session-requests/#jwts-signed-session-requests).
 The function returns a promise which on resolve gives the session identifiers
 `{sessionPtr: ..., token: ...}`.
 
