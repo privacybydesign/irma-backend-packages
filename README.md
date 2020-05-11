@@ -30,7 +30,7 @@ IRMA server is needed then. The details of the IRMA server library can be found
 The Javascript packages can be found in the `js` directory. This package consists of two
 modules: `irma-backend` for starting and managing sessions and `irma-jwt` for generating
 and verifying JWTs. A detailed explanation of the methods available can be found in the
-README within the `js` directory.
+[README](/js) within the `js` directory.
 
 The `irma-backend` module only provides backend functionalities for session management
 and starting sessions. A session cannot be handled via the console. For this you can use
