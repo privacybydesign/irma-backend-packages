@@ -1,6 +1,6 @@
 {
   "name": "@privacybydesign/irma-backend",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Backend library to use API endpoints of the IRMA server",
   "main": "index.js",
   "repository": {
@@ -11,8 +11,8 @@
   "license": "MIT",
   "author": "Ivar Derksen (Privacy by Design Foundation)",
   "dependencies": {
-    "isomorphic-fetch": "^2.2.1",
+    "deepmerge": "^4.2.2",
     "eventsource": "^1.0.7",
-    "deepmerge": "^4.2.2"
+    "isomorphic-fetch": "^3.0.0"
   }
 }
