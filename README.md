@@ -1,24 +1,28 @@
-_Work in progress - See https://github.com/privacybydesign/irmajs or https://irma.app/docs/api-irma-server/ for now_
-
 # IRMA backend packages
-IRMA backend packages is a collection of libraries to integrate IRMA in the backend of your application.
-Using the libraries in this package you can start and manage IRMA sessions from your backend and
-generate and verify IRMA JWTs for session requests and session results.
+IRMA backend packages is a collection of libraries in multiple programming languages
+to integrate IRMA in the backend of your application. Using the libraries in this repository
+you can start and manage IRMA sessions from your backend and generate and verify IRMA JWTs
+for session requests and session results. These libraries all build upon the [IRMA server](https://irma.app/docs/what-is-irma#irma-servers)
+as implemented [irmago](https://github.com/privacybydesign/irmago).
 
-The libraries for starting and managing IRMA sessions implement the REST API of `irma server`
-as implemented in [irmago](https://github.com/privacybydesign/irmago). The exact outline
-of this REST API can be found in the [documentation](https://irma.app/docs/api-irma-server/).
-
-A general overview of functionalities this library provides to you:
- - Starting IRMA sessions using a session request or a JWT at the IRMA server
- - Retrieving the current status of IRMA sessions (only once or by receiving events on status updates)
- - Retrieving session result or session result JWT when a session succeeded
+In particular, these libraries allow you to do the following:
+ - Starting IRMA sessions using a [session request](https://irma.app/docs/session-requests/)
+   or a [JWT](https://irma.app/docs/session-requests/#jwts-signed-session-requests) at the IRMA server
+ - Retrieving the current [status of IRMA sessions](https://irma.app/docs/api-irma-server/#get-session-token-status)
+   (only once or by receiving events on status updates)
+ - Retrieving the [session result](https://irma.app/docs/api-irma-server/#get-session-token-result)
+   or [session result JWT](https://irma.app/docs/api-irma-server/#get-session-token-result-jwt)
+   when a session succeeded
  - Cancelling IRMA sessions
  - Retrieving the JWT public key of the IRMA server
  - Generating a JWT of a session request
  - Verifying a JWT of a session request or a session result
 
-The exact use of these features depends per programming language.
+Depending on the programming language, the libraries achieve this by either directly including
+the IRMA server functionality, or by consuming the [REST API](https://irma.app/docs/api-irma-server)
+exposed by the irma server.
+
+The library will slightly differ per language, since each programming language has its own conventions.
 
 ## [Go](https://golang.org/)
 The IRMA server itself is implemented in Go. If you want to integrate the IRMA server in your
@@ -49,3 +53,7 @@ When you made a library for a programming language yourself that we do not suppo
 or when you added features to existing libraries, you can always send us a pull request.
 We are always interested in extending the IRMA ecosystem with support for additional
 programming languages.
+
+## Documentation
+The information from this README can also be found in the
+[IRMA documentation](https://irma.app/docs/irma-backend/).
