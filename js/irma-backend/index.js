@@ -19,7 +19,10 @@ module.exports = class IrmaBackend {
 
   _serverFetch(endpoint, requestOptions) {
     if (this._options.serverToken)
-      requestOptions.headers['Authorization'] = this._options.serverToken;
+      requestOptions.headers = {
+        ...requestOptions.headers,
+        'Authorization': this._options.serverToken,
+    };
 
     const url = `${this._serverUrl}/${endpoint}`;
 
