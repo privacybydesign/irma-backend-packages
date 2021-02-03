@@ -33,10 +33,7 @@ module.exports = class IrmaBackend {
     .then(r => {
       if ( r.status != 200 )
         throw(`Error while communicating with irma server: status other than 200 OK. Status: ${r.status} ${r.statusText}`);
-
-      // Only unmarshal JSON when there actually is content
-      if (r.headers.get('content-length') > 0)
-        return r.json();
+      return r;
     })
   }
 
@@ -54,27 +51,27 @@ module.exports = class IrmaBackend {
       requestOptions.headers['Content-Type'] = 'application/json';
     }
 
-    return this._serverFetch('session', requestOptions);
+    return this._serverFetch('session', requestOptions).then(r => r.json());
   }
 
   cancelSession(sessionToken) {
-    return this._serverFetch(`session/${sessionToken}`, {method: 'DELETE'});
+    return this._serverFetch(`session/${sessionToken}`, {method: 'DELETE'}).then(() => undefined);
   }
 
   getSessionResult(sessionToken) {
-    return this._serverFetch(`session/${sessionToken}/result`, {method: 'GET'});
+    return this._serverFetch(`session/${sessionToken}/result`, {method: 'GET'}).then(r => r.json());
   }
 
   getSessionResultJwt(sessionToken) {
-    return this._serverFetch(`session/${sessionToken}/result-jwt`, {method: 'GET'});
+    return this._serverFetch(`session/${sessionToken}/result-jwt`, {method: 'GET'}).then(r => r.text());
   }
 
   getSessionStatus(sessionToken) {
-    return this._serverFetch(`session/${sessionToken}/status`, {method: 'GET'});
+    return this._serverFetch(`session/${sessionToken}/status`, {method: 'GET'}).then(r => r.json());
   }
 
   getServerPublicKey() {
-    return this._serverFetch('publickey', {method: 'GET'})
+    return this._serverFetch('publickey', {method: 'GET'}).then(r => r.text());
   }
 
   subscribeStatusEvents(sessionToken, eventCallback) {
