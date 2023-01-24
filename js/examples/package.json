@@ -1,6 +1,6 @@
 {
   "name": "irma-backend-examples",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Examples on how to use irma-backend and irma-jwt in Javascript",
   "main": "index.js",
   "scripts": {

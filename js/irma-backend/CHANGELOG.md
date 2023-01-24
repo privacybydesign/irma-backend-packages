@@ -4,6 +4,12 @@ All notable changes to this package will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.5] - 2022-01-24
+### Security
+- Updated depency `eventsource` to v2.0.2
+### Added
+- package-lock.json
+
 ## [0.1.4] - 2021-02-03
 ### Fixed
 - The `getSessionResultJwt` and `getServerPublicKey` methods wrongly interpreted the
@@ -28,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release
 
+[0.1.5]: https://github.com/privacybydesign/irma-backend-packages/compare/6746eac...a478de3
 [0.1.4]: https://github.com/privacybydesign/irma-backend-packages/compare/94960ff...c8eb089
 [0.1.3]: https://github.com/privacybydesign/irma-backend-packages/compare/00a8e5b...94960ff
 [0.1.2]: https://github.com/privacybydesign/irma-backend-packages/compare/128f8ef...00a8e5b
