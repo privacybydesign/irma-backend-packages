@@ -12,7 +12,7 @@
   "author": "Ivar Derksen (Privacy by Design Foundation)",
   "dependencies": {
     "deepmerge": "^4.2.2",
-    "eventsource": "^1.0.7",
+    "eventsource": "^2.0.2",
     "isomorphic-fetch": "^3.0.0"
   }
 }
