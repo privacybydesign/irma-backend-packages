@@ -16,9 +16,9 @@
   "author": "Ivar Derksen (Privacy by Design Foundation)",
   "license": "MIT",
   "dependencies": {
-    "@privacybydesign/irma-client": "^0.1.1",
-    "@privacybydesign/irma-console": "^0.1.1",
-    "@privacybydesign/irma-core": "^0.1.1",
+    "@privacybydesign/irma-client": "^0.4.3",
+    "@privacybydesign/irma-console": "^0.4.3",
+    "@privacybydesign/irma-core": "^0.4.3",
     "irma-backend": "../irma-backend",
     "irma-jwt": "../irma-jwt"
   }

@@ -52,11 +52,11 @@ module.exports = class IrmaJwt {
       case "HS256":
         if (!this._options.secretKey)
           throw new Error('No hmac secret key is defined in IrmaJwt instance');
-        return JWT.verify(jwt, this._options.secretKey);
+        return JWT.verify(jwt, this._options.secretKey, { algorithms: ['HS256'] });
       case "RS256":
         if (!this._options.publicKey)
           throw new Error('No public key is defined in IrmaJwt instance');
-        return JWT.verify(jwt, this._options.publicKey);
+        return JWT.verify(jwt, this._options.publicKey, { algorithms : ['RS256'] });
       default:
         throw new Error(`Verification of JWTs`)
     }

@@ -15,4 +15,4 @@ const irmaRequest = {
 console.log('Starting JWT example:');
 const jwt = irmaJwt.signSessionRequest(irmaRequest);
 console.log('JWT:', jwt);
-console.log('Verified JWT:', irmaJwt.verify(jwt));
+console.log('Verified JWT:', JSON.stringify(irmaJwt.verify(jwt), null, 4));
