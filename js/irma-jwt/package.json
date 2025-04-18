@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "Backend library to make and verify IRMA JWTs",
   "main": "index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/privacybydesign/irma-backend-packages",
