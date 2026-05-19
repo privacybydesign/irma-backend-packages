@@ -11,6 +11,6 @@
   "author": "Ivar Derksen (Privacy by Design Foundation)",
   "license": "MIT",
   "dependencies": {
-    "jsonwebtoken": "^9.0.0"
+    "jsonwebtoken": "^9.0.3"
   }
 }
